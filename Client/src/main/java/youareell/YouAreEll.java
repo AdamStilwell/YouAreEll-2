@@ -6,9 +6,12 @@ public class YouAreEll {
 
     TransactionController tt;
 
+
     public YouAreEll (TransactionController t) {
         this.tt = t;
     }
+
+    public YouAreEll (MessageController m, IdController i){this.tt = new TransactionController(m,i);}
 
     public static void main(String[] args) {
         // hmm: is this Dependency Injection?
@@ -20,8 +23,12 @@ public class YouAreEll {
         System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
     }
 
+    private String MakeURLCall(String s, String get, String s1) {
+        return null;
+    }
+
     public String get_ids() {
-        return tt.makecall("/ids", "GET", "");
+        return tt.makeCall("/ids", "GET", "");
     }
 
     public String get_messages() {

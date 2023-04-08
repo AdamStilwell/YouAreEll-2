@@ -1,4 +1,7 @@
-import spiffyUrlManipulator
+package controllers;
+
+import models.Id;
+import spiffyUrlManipulator;
 
 public class ServerController() {
     private String rootURL = "http://zipcode.rocks:8085";
@@ -7,7 +10,7 @@ public class ServerController() {
 
     private ServerController() {}
 
-    public static shared() {
+    public static ServerController shared() {
         return svr;
     }
 
@@ -15,6 +18,7 @@ public class ServerController() {
         // url -> /ids/
         // send the server a get with url
         // return json from server
+        return null;
     }
     public JsonString idPost(Id) {
         // url -> /ids/
