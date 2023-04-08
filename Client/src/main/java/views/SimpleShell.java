@@ -112,7 +112,7 @@ public class SimpleShell {
             }
 
             //catch ioexception, output appropriate message, resume waiting for input
-            catch (IOException e) {
+            catch (/*IO*/Exception e) {
                 System.out.println("Input Error, Please try again!");
             }
             // So what, do you suppose, is the meaning of this comment?
