@@ -14,8 +14,8 @@ public class Id {
             @JsonProperty("github") String github)
     {
         this.userid = userid;
-        this.name = name;
-        this.github = github;
+        setName(name);
+        setGithub(github);
     }
 
 

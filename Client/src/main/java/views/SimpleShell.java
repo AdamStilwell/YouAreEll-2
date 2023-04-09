@@ -4,14 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import controllers.IdController;
 import controllers.MessageController;
+import controllers.TransactionController;
 import models.Id;
 import models.Message;
 import youareell.YouAreEll;
+
+import static youareell.YouAreEll.get_ids;
+import static youareell.YouAreEll.get_messages;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
 public class SimpleShell {
@@ -70,8 +75,8 @@ public class SimpleShell {
                 // Specific Commands.
 
                 // ids
-                if (list.contains("ids")) {
-                    String results = urll.get_ids("/ids");
+                if (list.contains("ids") && list.size() == 1) {
+                    String results = get_ids("/ids");
                     IdController idController = new IdController();
                     ArrayList<Id> idsList = idController.getIds(results);
                     for (Id id : idsList){
@@ -82,17 +87,47 @@ public class SimpleShell {
 
                 // messages
                 if (list.contains("messages") && list.size() == 1) {
-                    String results = urll.get_messages("/messages");
+                    String results = get_messages("/messages");
                     simpleShell.messagesPrinter(results);
                     continue;
                 }
 
                 if(list.contains("messages") && list.size() == 2){
-                    String results = urll.get_messages("/ids/" + list.get(1) + "/messages");
+                    String results = get_messages("/ids/" + list.get(1) + "/messages");
                     simpleShell.messagesPrinter(results);
                     continue;
                 }
 
+                if(list.contains("messages") && list.size() == 4){
+                    String results = get_messages("/ids/" + list.get(1) + "/from/" + list.get(3));
+                    simpleShell.messagesPrinter(results);
+                }
+
+                if(list.contains("ids") && list.size() == 3){
+                    TransactionController tc = new TransactionController(new MessageController(), new IdController());
+                    String results = get_ids("/ids");
+                    IdController idController = new IdController();
+                    ArrayList<Id> idsList = idController.getIds(results);
+                    for (Id id: idsList) {
+                        if (id.getGithub().equals(list.get(2))){
+                            tc.putId(list.get(1), list.get(2));
+                        }
+                    }
+                    tc.postId(list.get(1), list.get(2));
+                }
+
+                if(list.contains("send") && list.size() == 3){
+                    //post a message to the server //ids/ userid /messages
+                    //1 is id
+                    //2 is message
+                }
+
+                if(list.contains("send") && list.size() == 4){
+                    //send a message to a friend //ids/ userid /messages
+                    //1 is id
+                    //2 is message
+                    //4 is friend id
+                }
 
                 // you need to add a bunch more.
 

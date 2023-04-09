@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Id;
 
+import java.io.IOException;
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,14 +29,16 @@ public class TransactionController {
     public List<Id> getIds() {
         return null;
     }
-    public String postId(String idtoRegister, String githubName) {
-        Id tid = new Id(idtoRegister, githubName);
+    public String postId(String idtoRegister, String githubName) throws IOException {
+        Id tid = new Id("-",idtoRegister, githubName);
         tid = idCtrl.postId(tid);
         return ("Id registered.");
     }
 
-    public void postRequest(String url) {
-
+    public String putId(String idtoRegister, String githubName) throws IOException {
+        Id tid = new Id(idtoRegister, githubName);
+        tid = idCtrl.putId(tid);
+        return ("Id changed.");
     }
 
     public String makeCall(String s, String get, String s1) {

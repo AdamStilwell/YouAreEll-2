@@ -5,12 +5,14 @@ import controllers.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.*;
 import java.net.http.HttpRequest;
+import java.nio.charset.StandardCharsets;
 
 
 public class YouAreEll {
-    private String rootURL = "http://zipcode.rocks:8085";
+    private static String rootURL = "http://zipcode.rocks:8085";
 
     TransactionController tt;
 
@@ -23,15 +25,15 @@ public class YouAreEll {
 
     public static void main(String[] args) throws IOException {
         // hmm: is this Dependency Injection?
-        YouAreEll urlhandler = new YouAreEll(
-            new TransactionController(
-                new MessageController(), new IdController()
-        ));
-        System.out.println(urlhandler.MakeURLCall("/ids", "GET", ""));
-        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
+//        YouAreEll urlhandler = new YouAreEll(
+//            new TransactionController(
+//                new MessageController(), new IdController()
+//        ));
+//        System.out.println(MakeURLCall("/ids", "GET", ""));
+//        System.out.println(MakeURLCall("/messages", "GET", ""));
     }
 
-    private String MakeURLCall(String url, String command, String s1) throws IOException  {
+    public static String MakeURLCall(String url, String command, String json) throws IOException  {
         StringBuilder sb = new StringBuilder();
         sb.append(rootURL)
                 .append(url);
@@ -39,7 +41,17 @@ public class YouAreEll {
         sb.setLength(0);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod(command);
-        //con.setRequestProperty("User-Agent", USER_AGENT);
+        if(command.equals("POST")){
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Accept", "application/json");
+            con.setDoOutput(true);
+            try(OutputStream os = con.getOutputStream()){
+                byte[] input = json.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+        }else if(command.equals("PUT")){
+
+        }
         int responseCode = con.getResponseCode();
         System.out.println(command + " Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
@@ -56,23 +68,23 @@ public class YouAreEll {
         return sb.toString();
     }
 
-    public String get_ids(String url) throws IOException {
+    public static String get_ids(String url) throws IOException {
         return MakeURLCall(url, "GET", "");
     }
 
-    public String get_messages(String url) throws IOException {
+    public static String get_messages(String url) throws IOException {
         return MakeURLCall(url, "GET", "");
     }
 
-    public String post_ids(String url) throws IOException {
-        return MakeURLCall(url, "POST", "");
+    public static String post_ids(String url, String json) throws IOException {
+        return MakeURLCall(url, "POST", json);
     }
 
-    public String post_messages(String url) throws IOException {
-        return MakeURLCall(url, "POST", "");
+    public static String post_messages(String url, String json) throws IOException {
+        return MakeURLCall(url, "POST", json);
     }
 
-    public String put_ids(String url) throws IOException {
-        return MakeURLCall(url, "PUT", "");
+    public static String put_ids(String url, String json) throws IOException {
+        return MakeURLCall(url, "PUT", json);
     }
 }

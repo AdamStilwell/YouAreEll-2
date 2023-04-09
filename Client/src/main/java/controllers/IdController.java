@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +13,9 @@ import models.Id;
 import youareell.YouAreEll;
 
 import javax.json.JsonString;
+
+import static youareell.YouAreEll.post_ids;
+import static youareell.YouAreEll.put_ids;
 
 public class IdController {
     private HashMap<String, Id> allIds;
@@ -29,14 +33,30 @@ public class IdController {
         }
     }
 
-    public Id postId(Id id) {
+    public Id postId(Id id) throws IOException {
         // create json from id
+        try {
+            System.out.println("Checkpoint 1");
+            String jsonString =  mapper.writeValueAsString(id);
+            System.out.println("Checkpoint 2");
+            post_ids("/ids", jsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         // call server, get json result Or error
         // result json to Id obj
+
         return null;
     }
 
-    public Id putId(Id id) {
+    public Id putId(Id id) throws IOException {
+        try {
+            String jsonString =  mapper.writeValueAsString(id);
+            put_ids("/ids", jsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
  
