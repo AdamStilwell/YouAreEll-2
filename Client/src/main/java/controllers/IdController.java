@@ -2,8 +2,9 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import models.Id;
+
+import javax.json.JsonString;
 
 public class IdController {
     private HashMap<String, Id> allIds;
@@ -18,7 +19,6 @@ public class IdController {
         // create json from id
         // call server, get json result Or error
         // result json to Id obj
-
         return null;
     }
 
