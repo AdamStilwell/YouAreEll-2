@@ -34,7 +34,7 @@ public class TransactionController {
         return ("Id registered.");
     }
 
-    public void postRequest(String url) throws URISyntaxException {
+    public void postRequest(String url) {
 
     }
 

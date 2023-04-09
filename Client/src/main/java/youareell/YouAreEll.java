@@ -72,4 +72,11 @@ public class YouAreEll {
         return MakeURLCall("/messages", "POST", "");
     }
 
+    public String put_ids() throws IOException {
+        return MakeURLCall("/ids", "PUT", "");
+    }
+
+    public String put_messages() throws IOException {
+        return MakeURLCall("/messages", "PUT", "");
+    }
 }
