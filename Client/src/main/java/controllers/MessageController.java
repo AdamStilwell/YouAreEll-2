@@ -18,9 +18,7 @@ public class MessageController {
 
     public ArrayList<Message> getMessages(String messages) {
         try {
-            System.out.println("Checkpoint 1");
             ArrayList<Message> messagesList = mapper.readValue(messages, new TypeReference<ArrayList<Message>>(){});
-            System.out.println("Checkpoint 2");
             return messagesList;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

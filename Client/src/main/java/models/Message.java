@@ -26,9 +26,9 @@ public class Message implements Comparable {
             @JsonProperty("toid") String toid,
             @JsonProperty("message") String message)
     {
-        this.message = message;
-        this.toId = toid;
-        this.fromId = fromId;
+        setMessage(message);
+        setToId(toid);
+        setFromId(fromId);
         this.timestamp = timestamp;
         this.seqId = seqId;
     }
@@ -75,6 +75,10 @@ public class Message implements Comparable {
     }
 
     public void setToId(String toId) {
+        if(toId.equals("")){
+            this.toId = "Everyone";
+            return;
+        }
         this.toId = toId;
     }
 

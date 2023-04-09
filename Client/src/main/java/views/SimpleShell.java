@@ -22,6 +22,7 @@ public class SimpleShell {
         System.out.println(output);
     }
     public static void main(String[] args) throws java.io.IOException {
+        SimpleShell simpleShell = new SimpleShell();
 
         YouAreEll urll = new YouAreEll(new MessageController(), new IdController());
         
@@ -70,7 +71,7 @@ public class SimpleShell {
 
                 // ids
                 if (list.contains("ids")) {
-                    String results = urll.get_ids();
+                    String results = urll.get_ids("/ids");
                     IdController idController = new IdController();
                     ArrayList<Id> idsList = idController.getIds(results);
                     for (Id id : idsList){
@@ -80,15 +81,19 @@ public class SimpleShell {
                 }
 
                 // messages
-                if (list.contains("messages")) {
-                    String results = urll.get_messages();
-                    MessageController messageController = new MessageController();
-                    ArrayList<Message> messagesList = messageController.getMessages(results);
-                    for (Message message : messagesList){
-                        SimpleShell.prettyPrint(message.toString());
-                    }
+                if (list.contains("messages") && list.size() == 1) {
+                    String results = urll.get_messages("/messages");
+                    simpleShell.messagesPrinter(results);
                     continue;
                 }
+
+                if(list.contains("messages") && list.size() == 2){
+                    String results = urll.get_messages("/ids/" + list.get(1) + "/messages");
+                    simpleShell.messagesPrinter(results);
+                    continue;
+                }
+
+
                 // you need to add a bunch more.
 
                 //!! command returns the last command in history
@@ -137,6 +142,18 @@ public class SimpleShell {
         }
 
 
+    }
+
+    public void messagesPrinter(String results){
+        MessageController messageController = new MessageController();
+        ArrayList<Message> messagesList = messageController.getMessages(results);
+        int count = 0;
+        for (Message message : messagesList){
+            if(count<20){
+                SimpleShell.prettyPrint(message.toString());
+            }
+            count++;
+        }
     }
 
 }
