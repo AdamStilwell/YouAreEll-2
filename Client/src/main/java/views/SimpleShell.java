@@ -116,10 +116,17 @@ public class SimpleShell {
                     tc.postId(list.get(1), list.get(2));
                 }
 
-                if(list.contains("send") && list.size() == 3){
+                if(list.contains("send")){
                     //post a message to the server //ids/ userid /messages
-                    //1 is id
-                    //2 is message
+                    String url = "/ids/" + list.get(1) + "/messages/";
+                    StringBuilder sb = new StringBuilder();
+                    for(int i = 2; i<list.size(); i++){
+                        sb.append(list.get(i));
+                        sb.append(" ");
+                    }
+                    System.out.println(url);
+                    MessageController msgCtr = new MessageController();
+                    msgCtr.postMessage(list.get(1), "", sb.toString().trim(), url);
                 }
 
                 if(list.contains("send") && list.size() == 4){

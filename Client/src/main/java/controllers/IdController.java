@@ -36,16 +36,13 @@ public class IdController {
     public Id postId(Id id) throws IOException {
         // create json from id
         try {
-            System.out.println("Checkpoint 1");
             String jsonString =  mapper.writeValueAsString(id);
-            System.out.println("Checkpoint 2");
             post_ids("/ids", jsonString);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         // call server, get json result Or error
         // result json to Id obj
-
         return null;
     }
 
@@ -56,7 +53,6 @@ public class IdController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
         return null;
     }
  
